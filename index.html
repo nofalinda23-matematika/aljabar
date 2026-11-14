@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Media Pembelajaran Interaktif: Rotasi Geometri SMP</title>
+  <title>Kuis Interaktif Bilangan Bulat SMP</title>
   <style>
     :root {
-      --primary: #4f46e5;
-      --primary-hover: #4338ca;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
       --secondary: #0ea5e9;
-      --accent: #f43f5e;
-      --success: #10b981;
-      --bg: #f1f5f9;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --warning: #d97706;
+      --bg: #eff6ff;
       --card: #ffffff;
       --text: #1e293b;
       --border: #cbd5e1;
@@ -25,383 +28,418 @@
     body {
       margin: 0;
       padding: 20px;
-      background-color: var(--bg);
+      background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
       color: var(--text);
-    }
-
-    .wrapper {
-      max-width: 1140px;
-      margin: 0 auto;
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    header {
-      background: linear-gradient(135deg, #312e81, #4f46e5);
-      color: white;
-      padding: 22px 28px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.2);
-    }
-
-    header h1 {
-      margin: 0 0 6px 0;
-      font-size: 1.65rem;
-    }
-
-    header p {
-      margin: 0;
-      opacity: 0.9;
-      font-size: 0.95rem;
-    }
-
-    /* Tab Navigasi Materi */
-    .nav-tabs {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .nav-btn {
-      padding: 10px 20px;
-      border: 2px solid var(--primary);
-      background: white;
-      color: var(--primary);
-      border-radius: 999px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .nav-btn.active, .nav-btn:hover {
-      background: var(--primary);
-      color: white;
-    }
-
-    .section {
-      display: none;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    /* Layout Simulasi */
-    .sim-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 20px;
-    }
-
-    @media (max-width: 900px) {
-      .sim-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .card {
-      background: var(--card);
-      border-radius: 14px;
-      padding: 20px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-      border: 1px solid var(--border);
-    }
-
-    .canvas-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    canvas {
-      border: 2px solid #94a3b8;
-      border-radius: 10px;
-      background: #ffffff;
-      max-width: 100%;
-      height: auto;
-    }
-
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 12px;
-      font-size: 0.88rem;
       justify-content: center;
-    }
-
-    .legend span {
-      display: flex;
       align-items: center;
-      gap: 6px;
-      font-weight: 600;
     }
 
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    /* Kontrol Simulasi */
-    .control-group {
-      margin-bottom: 16px;
-    }
-
-    .control-group label {
-      display: block;
-      font-weight: 700;
-      margin-bottom: 6px;
-      font-size: 0.92rem;
-      color: #334155;
-    }
-
-    select, input[type="range"] {
+    .app-card {
+      background: var(--card);
       width: 100%;
-      padding: 9px 12px;
+      max-width: 720px;
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.12);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.95rem;
+      overflow: hidden;
     }
 
-    .angle-pills {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
-
-    .pill-btn {
-      padding: 10px;
-      border: 1px solid var(--border);
-      background: #f8fafc;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 0.88rem;
-    }
-
-    .pill-btn.active {
-      background: #eef2ff;
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    .action-btns {
-      display: flex;
-      gap: 10px;
-      margin: 18px 0;
-    }
-
-    .btn-play {
-      flex: 2;
-      padding: 12px;
-      background: var(--primary);
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
       color: white;
-      border: none;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .btn-play:hover {
-      background: var(--primary-hover);
-    }
-
-    .btn-reset {
-      flex: 1;
-      padding: 12px;
-      background: #e2e8f0;
-      color: #1e293b;
-      border: none;
-      border-radius: 10px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .btn-reset:hover {
-      background: #cbd5e1;
-    }
-
-    .formula-card {
-      background: #eef2ff;
-      border-left: 5px solid var(--primary);
-      padding: 14px;
-      border-radius: 8px;
-      margin-bottom: 16px;
-    }
-
-    .formula-card h3 {
-      margin: 0 0 6px 0;
-      font-size: 1rem;
-      color: #312e81;
-    }
-
-    .formula-text {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #1e1b4b;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.9rem;
-    }
-
-    th, td {
-      border: 1px solid var(--border);
-      padding: 8px 10px;
+      padding: 22px 26px;
       text-align: center;
     }
 
-    th {
-      background: #f1f5f9;
+    .header h1 {
+      margin: 0 0 6px 0;
+      font-size: 1.55rem;
     }
 
-    /* Bagian Konsep Materi */
-    .concept-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
+    .header p {
+      margin: 0;
+      font-size: 0.92rem;
+      opacity: 0.9;
     }
 
-    .concept-item {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
+    /* Layar Awal */
+    .start-screen {
+      padding: 32px 28px;
+      text-align: center;
     }
 
-    .concept-item h3 {
-      margin-top: 0;
-      color: var(--primary);
+    .info-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 18px 0 24px;
     }
 
-    /* Bagian Latihan Soal */
-    .quiz-box {
-      max-width: 700px;
-      margin: 0 auto;
+    .pill {
+      background: #eff6ff;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
     }
 
-    .quiz-opt {
-      display: block;
-      width: 100%;
+    .input-group {
+      max-width: 380px;
+      margin: 0 auto 20px;
       text-align: left;
-      padding: 12px 16px;
-      margin: 8px 0;
+    }
+
+    .input-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 0.92rem;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 14px;
       border: 2px solid var(--border);
       border-radius: 10px;
-      background: white;
-      font-size: 0.95rem;
-      cursor: pointer;
+      font-size: 1rem;
+      transition: border-color 0.2s;
     }
 
-    .quiz-opt:hover:not(:disabled) {
+    .input-group input:focus {
+      outline: none;
       border-color: var(--primary);
-      background: #eef2ff;
     }
 
-    .quiz-opt.correct {
-      background: #dcfce7;
-      border-color: #16a34a;
-      font-weight: bold;
+    .btn-main {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 13px 32px;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.2s;
     }
 
-    .quiz-opt.wrong {
+    .btn-main:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    /* Layar Kuis */
+    .quiz-screen {
+      display: none;
+    }
+
+    .status-bar {
+      background: #f8fafc;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+
+    .timer-badge {
+      background: #fef3c7;
+      color: #b45309;
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid #fde68a;
+      font-weight: 700;
+    }
+
+    .timer-badge.urgent {
       background: #fee2e2;
-      border-color: #dc2626;
+      color: #b91c1c;
+      border-color: #fecaca;
+    }
+
+    .progress-track {
+      height: 6px;
+      background: #e2e8f0;
+      width: 100%;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--secondary);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .quiz-content {
+      padding: 26px;
+    }
+
+    .category-tag {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1d4ed8;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .question-text {
+      font-size: 1.15rem;
+      font-weight: 600;
+      line-height: 1.55;
+      margin-bottom: 20px;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .opt-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      text-align: left;
+      padding: 14px 16px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      background: #ffffff;
+      font-size: 1rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .opt-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+
+    .opt-btn:disabled {
+      cursor: default;
+    }
+
+    .opt-letter {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .opt-btn.correct {
+      border-color: var(--success);
+      background: var(--success-bg);
+      color: #14532d;
+      font-weight: 600;
+    }
+
+    .opt-btn.correct .opt-letter {
+      background: var(--success);
+      color: white;
+    }
+
+    .opt-btn.wrong {
+      border-color: var(--danger);
+      background: var(--danger-bg);
+      color: #7f1d1d;
+    }
+
+    .opt-btn.wrong .opt-letter {
+      background: var(--danger);
+      color: white;
+    }
+
+    .explanation-box {
+      margin-top: 20px;
+      padding: 15px 18px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .explanation-box.show {
+      display: block;
+    }
+
+    .explanation-box.correct {
+      background: #f0fdf4;
+      border-left: 4px solid var(--success);
+      color: #166534;
+    }
+
+    .explanation-box.wrong {
+      background: #fef2f2;
+      border-left: 4px solid var(--danger);
+      color: #991b1b;
+    }
+
+    .quiz-footer {
+      padding: 0 26px 26px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-next {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.98rem;
+      cursor: pointer;
+      display: none;
+    }
+
+    .btn-next:hover {
+      background: var(--primary-dark);
+    }
+
+    /* Layar Hasil */
+    .result-screen {
+      display: none;
+      padding: 32px 28px;
+      text-align: center;
+    }
+
+    .score-badge {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: #eff6ff;
+      border: 6px solid var(--primary);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 18px;
+    }
+
+    .score-val {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .score-txt {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #475569;
+      margin-top: 4px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    .stat-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: 10px;
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 1.25rem;
+      margin-bottom: 2px;
+    }
+
+    .stat-box span {
+      font-size: 0.85rem;
+      color: #64748b;
     }
   </style>
 </head>
 <body>
 
-  <div class="wrapper">
-    <header>
-      <h1>Eksplorasi Rotasi (Perputaran) — Matematika SMP</h1>
-      <p>Pahami konsep perputaran bangun datar melalui simulasi animasi interaktif, rumus cepat, dan kuis latihan.</p>
-    </header>
-
-    <!-- Menu Navigasi -->
-    <div class="nav-tabs">
-      <button class="nav-btn active" onclick="switchTab('simulasi', this)">1. Simulasi Animasi Rotasi</button>
-      <button class="nav-btn" onclick="switchTab('materi', this)">2. Ringkasan Rumus & Konsep</button>
-      <button class="nav-btn" onclick="switchTab('kuis', this)">3. Latihan Soal Cepat</button>
+  <div class="app-card">
+    <div class="header">
+      <h1>Kuis Interaktif: Bilangan Bulat SMP</h1>
+      <p>Kelas VII &bull; Operasi Hitung, Perbandingan, dan Aplikasi Bilangan Bulat</p>
     </div>
 
-    <!-- TAB 1: SIMULASI INTERAKTIF -->
-    <div id="simulasi" class="section active">
-      <div class="sim-grid">
-        <!-- Kanvas -->
-        <div class="card canvas-box">
-          <canvas id="rotCanvas" width="520" height="520"></canvas>
-          <div class="legend">
-            <span><i class="dot" style="background:#2563eb;"></i> Bangun Awal (ABC)</span>
-            <span><i class="dot" style="background:#f43f5e;"></i> Bayangan (A'B'C')</span>
-            <span><i class="dot" style="background:#f59e0b;"></i> Pusat Putar O(0,0)</span>
-            <span><i class="dot" style="background:#10b981;"></i> Lintasan Busur Putar</span>
-          </div>
-        </div>
+    <!-- 1. LAYAR MULAI -->
+    <div class="start-screen" id="startScreen">
+      <h2 style="margin-top:0;">Siap Menguji Kemampuanmu?</h2>
+      <p style="color:#475569; max-width:500px; margin:0 auto;">
+        Kerjakan 10 soal pilihan ganda tentang bilangan bulat. Setiap soal memiliki waktu 45 detik dan dilengkapi pembahasan langsung.
+      </p>
 
-        <!-- Panel Kontrol -->
-        <div class="card">
-          <div class="control-group">
-            <label>Pilih Bentuk Bangun Awal:</label>
-            <select id="shapeSelect" onchange="changeShape()">
-              <option value="triangle">Segitiga ABC (A(2,1), B(6,1), C(3,4))</option>
-              <option value="flag">Bendera Segitiga (A(1,2), B(5,2), C(1,5))</option>
-              <option value="trapezoid">Trapesium Siku-siku (A(2,1), B(6,1), C(4,4), D(2,4))</option>
-            </select>
-          </div>
+      <div class="info-pills">
+        <span class="pill">📝 10 Soal Acak</span>
+        <span class="pill">⏱️ 45 Detik / Soal</span>
+        <span class="pill">💡 Pembahasan Otomatis</span>
+      </div>
 
-          <div class="control-group">
-            <label>Pilih Sudut & Arah Rotasi (Pusat O(0,0)):</label>
-            <div class="angle-pills">
-              <button class="pill-btn active" onclick="selectAngle(90, this)">+90° (Berlawanan Jarum Jam)</button>
-              <button class="pill-btn" onclick="selectAngle(-90, this)">-90° (Searah Jarum Jam)</button>
-              <button class="pill-btn" onclick="selectAngle(180, this)">180° (Setengah Putaran)</button>
-              <button class="pill-btn" onclick="selectAngle(270, this)">+270° (Berlawanan Jarum Jam)</button>
-            </div>
-          </div>
+      <div class="input-group">
+        <label for="studentName">Nama Lengkap Siswa:</label>
+        <input type="text" id="studentName" placeholder="Masukkan nama kamu..." />
+      </div>
 
-          <div class="control-group">
-            <label>Atau Geser Sudut Manual: <span id="manualAngleLabel" style="color:#4f46e5;">90°</span></label>
-            <input type="range" id="angleSlider" min="-360" max="360" step="15" value="90" oninput="manualRotate(this.value)">
-          </div>
+      <div class="input-group">
+        <label for="studentClass">Kelas:</label>
+        <input type="text" id="studentClass" placeholder="Contoh: VII-A" />
+      </div>
 
-          <div class="action-btns">
-            <button class="btn-play" onclick="playAnimation()">▶ Putar Animasi</button>
-            <button class="btn-reset" onclick="resetSim()">↺ Reset</button>
-          </div>
+      <button class="btn-main" onclick="startQuiz()">Mulai Kuis Sekarang &rarr;</button>
+    </div>
 
-          <div class="formula-card">
-            <h3 id="formulaTitle">Rotasi +90° Pusat O(0,0)</h3>
-            <div class="formula-text" id="formulaRule">P(x, y) &rarr; P'(-y, x)</div>
-            <small id="formulaNote" style="color:#475569; display:block; margin-top:4px;">
-              Arah positif (+) berarti berputar berlawanan arah jarum jam.
-            </small>
-          </div>
+    <!-- 2. LAYAR KUIS -->
+    <div class="quiz-screen" id="quizScreen">
+      <div class="status-bar">
+        <span id="playerInfo">Siswa: -</span>
+        <span id="questionNum">Soal 1 / 10</span>
+        <span class="timer-badge" id="timerBadge">⏱️ 45d</span>
+      </div>
 
-          <table>
-            <thead>
-              <tr>
-                <th>Titik</th>
-                <th>Koordinat Awal</th>
-                <th>Koordinat Bayangan</th>
-              </tr>
-            </thead>
-            <tbody id="coordTable"></tbody>
-          </table>
-        </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <div class="quiz-content">
+        <span class="category-tag" id="categoryTag">Kategori</span>
+        <div class="question-text" id="questionText">Pertanyaan muncul di sini...</div>
+        <div class="options-grid" id="optionsGrid"></div>
+        <div class="explanation-box" id="explanationBox"></div>
+      </div>
+
+      <div class="quiz-footer">
+        <button class="btn-next" id="nextBtn" onclick="nextQuestion()">Soal Berikutnya &rarr;</button>
       </div>
     </div>
 
-    <!-- TAB 2: RINGKASAN KONSEP -->
-    <div id="materi" class="section">
-      <div class="card">
-        <h2 style="margin-top:0;">Apa Itu Rotasi (Perputaran)?</h2>
-        <p>
+    <!-- 3. LAYAR HASIL -->
+    <div class="result-screen" id="resultScreen">
+      <div class="score-badge">
+        <span class="score-val" id="finalScore">0</span>
+        <span class="score-txt">SKOR AKHIR</span>
+      </div>
+
+      <h2 id="resultHeadline" style="margin-bottom:6px;">Selamat!</h2>
+      <p id="resultStudentInfo" style="color:#475569; margin-top:0;"></p>
+
+      <div class="stats-grid">
