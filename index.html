@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daftar Nilai Online Multi-Kelas</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --success: #16a34a;
+      --success-hover: #15803d;
+      --danger: #dc2626;
+      --danger-hover: #b91c1c;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --border: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    .app-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 20px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .header p {
+      margin: 4px 0 0 0;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Navigasi Tab Kelas */
+    .tabs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      background: #f1f5f9;
+      padding: 10px 20px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 6px;
+    }
+
+    .tab-btn {
+      padding: 10px 18px;
+      border: 1px solid transparent;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      background: #e2e8f0;
+      color: #475569;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-btn:hover {
+      background: #cbd5e1;
+      color: #0f172a;
+    }
+
+    .tab-btn.active {
+      background: #ffffff;
+      color: var(--primary);
+      border-color: var(--border);
+      margin-bottom: -1px;
+      padding-bottom: 11px;
+    }
+
+    .btn-add-class {
+      padding: 8px 14px;
+      margin-bottom: 6px;
+      background: var(--success);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-left: auto;
+    }
+
+    .btn-add-class:hover {
+      background: var(--success-hover);
+    }
+
+    /* Area Kontrol Siswa */
+    .toolbar {
+      padding: 18px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .add-student-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      flex: 1;
+    }
+
+    input[type="text"], input[type="number"] {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    input[type="number"] {
+      width: 75px;
+      text-align: center;
+    }
+
+    input[type="number"]:focus, input[type="text"]:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: var(--success-hover);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+    }
+
+    .btn-danger:hover {
+      background: var(--danger-hover);
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Tabel Nilai */
+    .table-wrapper {
+      padding: 0 24px 24px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: center;
+    }
+
+    th {
+      background: #f8fafc;
+      color: #334155;
+      font-weight: 700;
+    }
+
+    td.name-col {
+      text-align: left;
+      font-weight: 500;
+    }
+
+    tr:hover {
+      background-color: #f8fafc;
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .grade-A { background: #dcfce7; color: #166534; }
+    .grade-B { background: #dbeafe; color: #1e40af; }
+    .grade-C { background: #fef9c3; color: #854d0e; }
+    .grade-D { background: #fee2e2; color: #991b1b; }
+
+    .summary-bar {
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: #f1f5f9;
+      border-radius: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      gap: 10px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Header -->
+    <div class="header">
+      <div>
+        <h1>Daftar Nilai Siswa Online</h1>
+        <p>Data tersimpan otomatis di perangkat Anda &bull; Mendukung penambahan kelas tanpa batas</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-success" onclick="exportToCSV()">📥 Unduh Excel (CSV)</button>
+        <button class="btn btn-outline" onclick="resetDefaultData()">↺ Reset Data Awal</button>
+      </div>
+    </div>
+
+    <!-- Tab Daftar Kelas -->
+    <div class="tabs-bar" id="tabsBar">
+      <!-- Tab kelas akan dimuat otomatis oleh JavaScript -->
+    </div>
+
+    <!-- Toolbar Tambah Siswa & Hapus Kelas -->
+    <div class="toolbar">
+      <div class="add-student-form">
+        <input type="text" id="newStudentName" placeholder="Ketik nama siswa baru..." onkeypress="handleEnter(event)" />
+        <button class="btn btn-primary" onclick="addStudent()">+ Tambah Siswa</button>
+      </div>
+      <div>
+        <button class="btn btn-danger" onclick="deleteCurrentClass()" id="deleteClassBtn">🗑 Hapus Kelas Ini</button>
+      </div>
+    </div>
+
+    <!-- Area Tabel Nilai -->
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 50px;">No</th>
+            <th style="text-align: left;">Nama Siswa</th>
+            <th style="width: 100px;">Tugas</th>
+            <th style="width: 100px;">UH / Kuis</th>
+            <th style="width: 100px;">UTS</th>
+            <th style="width: 100px;">UAS</th>
+            <th style="width: 110px;">Rata-rata</th>
+            <th style="width: 100px;">Predikat</th>
+            <th style="width: 80px;">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="studentTableBody">
+          <!-- Baris siswa dimuat otomatis -->
+        </tbody>
+      </table>
+
+      <div class="summary-bar" id="summaryBar">
+        <!-- Ringkasan kelas -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'daftar_nilai_online_v1';
+
+    // Data awal 4 kelas
+    const defaultData = {
+      activeClassId: 'kls-1',
+      classes: [
+        {
+          id: 'kls-1',
+          name: 'Kelas VII-A',
+          students: [
+            { id: 1, name: 'Ahmad Fauzan', tugas: 85, uh: 88, uts: 82, uas: 90 },
+            { id: 2, name: 'Bunga Citra', tugas: 92, uh: 90, uts: 88, uas: 94 },
+            { id: 3, name: 'Daffa Pratama', tugas: 75, uh: 70, uts: 78, uas: 80 }
+          ]
+        },
+        {
+          id: 'kls-2',
+          name: 'Kelas VII-B',
+          students: [
+            { id: 1, name: 'Citra Kirana', tugas: 88, uh: 85, uts: 84, uas: 89 },
+            { id: 2, name: 'Dimas Anggara', tugas: 68, uh: 72, uts: 65, uas: 70 }
+          ]
+        },
+        {
+          id: 'kls-3',
+          name: 'Kelas VIII-A',
+          students: [
+            { id: 1, name: 'Eka Putri', tugas: 95, uh: 92, uts: 90, uas: 96 },
+            { id: 2, name: 'Farhan Kamil', tugas: 80, uh: 78, uts: 82, uas: 85 }
+          ]
+        },
+        {
+          id: 'kls-4',
+          name: 'Kelas VIII-B',
+          students: [
+            { id: 1, name: 'Gita Gutawa', tugas: 84, uh: 86, uts: 80, uas: 88 },
+            { id: 2, name: 'Hendra Setiawan', tugas: 76, uh: 74, uts: 79, uas: 81 }
+          ]
+        }
+      ]
+    };
+
+    let appData = loadData();
+
+    function loadData() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {
+          return JSON.parse(JSON.stringify(defaultData));
+        }
+      }
+      return JSON.parse(JSON.stringify(defaultData));
+    }
+
+    function saveData() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+    }
+
+    function getActiveClass() {
+      return appData.classes.find(c => c.id === appData.activeClassId) || appData.classes[0];
+    }
+
+    // Render Tab Kelas
+    function renderTabs() {
+      const tabsBar = document.getElementById('tabsBar');
+      tabsBar.innerHTML = '';
+
+      appData.classes.forEach(cls => {
+        const btn = document.createElement('button');
+        btn.className = `tab-btn ${cls.id === appData.activeClassId ? 'active' : ''}`;
+        btn.innerHTML = `<span>${cls.name}</span> <small style="opacity:0.7;">(${cls.students.length})</small>`;
+        btn.onclick = () => {
+          appData.activeClassId = cls.id;
+          saveData();
