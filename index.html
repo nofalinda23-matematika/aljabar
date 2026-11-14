@@ -3,16 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daftar Nilai Online Multi-Kelas</title>
+  <title>Media Pembelajaran Interaktif: Rotasi Geometri SMP</title>
   <style>
     :root {
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --success: #16a34a;
-      --success-hover: #15803d;
-      --danger: #dc2626;
-      --danger-hover: #b91c1c;
-      --bg: #f8fafc;
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --secondary: #0ea5e9;
+      --accent: #f43f5e;
+      --success: #10b981;
+      --bg: #f1f5f9;
       --card: #ffffff;
       --text: #1e293b;
       --border: #cbd5e1;
@@ -30,383 +29,379 @@
       color: var(--text);
     }
 
-    .app-container {
-      max-width: 1100px;
+    .wrapper {
+      max-width: 1140px;
       margin: 0 auto;
-      background: var(--card);
-      border-radius: 14px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-      border: 1px solid var(--border);
-      overflow: hidden;
-    }
-
-    /* Header */
-    .header {
-      background: linear-gradient(135deg, #1e3a8a, #2563eb);
-      color: white;
-      padding: 20px 24px;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+      flex-direction: column;
+      gap: 20px;
     }
 
-    .header h1 {
+    header {
+      background: linear-gradient(135deg, #312e81, #4f46e5);
+      color: white;
+      padding: 22px 28px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.2);
+    }
+
+    header h1 {
+      margin: 0 0 6px 0;
+      font-size: 1.65rem;
+    }
+
+    header p {
       margin: 0;
-      font-size: 1.5rem;
-    }
-
-    .header p {
-      margin: 4px 0 0 0;
-      font-size: 0.9rem;
       opacity: 0.9;
+      font-size: 0.95rem;
     }
 
-    .header-actions {
+    /* Tab Navigasi Materi */
+    .nav-tabs {
       display: flex;
       gap: 10px;
-    }
-
-    /* Navigasi Tab Kelas */
-    .tabs-bar {
-      display: flex;
       flex-wrap: wrap;
-      align-items: center;
-      background: #f1f5f9;
-      padding: 10px 20px 0;
-      border-bottom: 1px solid var(--border);
-      gap: 6px;
     }
 
-    .tab-btn {
-      padding: 10px 18px;
-      border: 1px solid transparent;
-      border-bottom: none;
-      border-radius: 8px 8px 0 0;
-      background: #e2e8f0;
-      color: #475569;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 0.95rem;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .tab-btn:hover {
-      background: #cbd5e1;
-      color: #0f172a;
-    }
-
-    .tab-btn.active {
-      background: #ffffff;
+    .nav-btn {
+      padding: 10px 20px;
+      border: 2px solid var(--primary);
+      background: white;
       color: var(--primary);
-      border-color: var(--border);
-      margin-bottom: -1px;
-      padding-bottom: 11px;
-    }
-
-    .btn-add-class {
-      padding: 8px 14px;
-      margin-bottom: 6px;
-      background: var(--success);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.9rem;
+      border-radius: 999px;
+      font-weight: 700;
       cursor: pointer;
-      margin-left: auto;
+      transition: all 0.2s;
     }
 
-    .btn-add-class:hover {
-      background: var(--success-hover);
-    }
-
-    /* Area Kontrol Siswa */
-    .toolbar {
-      padding: 18px 24px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid #e2e8f0;
-    }
-
-    .add-student-form {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      flex: 1;
-    }
-
-    input[type="text"], input[type="number"] {
-      padding: 8px 12px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 0.95rem;
-    }
-
-    input[type="number"] {
-      width: 75px;
-      text-align: center;
-    }
-
-    input[type="number"]:focus, input[type="text"]:focus {
-      outline: none;
-      border-color: var(--primary);
-    }
-
-    .btn {
-      padding: 8px 16px;
-      border: none;
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .btn-primary {
+    .nav-btn.active, .nav-btn:hover {
       background: var(--primary);
       color: white;
     }
 
-    .btn-primary:hover {
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    /* Layout Simulasi */
+    .sim-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .sim-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+    }
+
+    .canvas-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    canvas {
+      border: 2px solid #94a3b8;
+      border-radius: 10px;
+      background: #ffffff;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 12px;
+      font-size: 0.88rem;
+      justify-content: center;
+    }
+
+    .legend span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* Kontrol Simulasi */
+    .control-group {
+      margin-bottom: 16px;
+    }
+
+    .control-group label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 6px;
+      font-size: 0.92rem;
+      color: #334155;
+    }
+
+    select, input[type="range"] {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .angle-pills {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .pill-btn {
+      padding: 10px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.88rem;
+    }
+
+    .pill-btn.active {
+      background: #eef2ff;
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .action-btns {
+      display: flex;
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .btn-play {
+      flex: 2;
+      padding: 12px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-play:hover {
       background: var(--primary-hover);
     }
 
-    .btn-success {
-      background: var(--success);
-      color: white;
+    .btn-reset {
+      flex: 1;
+      padding: 12px;
+      background: #e2e8f0;
+      color: #1e293b;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
     }
 
-    .btn-success:hover {
-      background: var(--success-hover);
+    .btn-reset:hover {
+      background: #cbd5e1;
     }
 
-    .btn-danger {
-      background: var(--danger);
-      color: white;
-      padding: 6px 10px;
-      font-size: 0.85rem;
+    .formula-card {
+      background: #eef2ff;
+      border-left: 5px solid var(--primary);
+      padding: 14px;
+      border-radius: 8px;
+      margin-bottom: 16px;
     }
 
-    .btn-danger:hover {
-      background: var(--danger-hover);
+    .formula-card h3 {
+      margin: 0 0 6px 0;
+      font-size: 1rem;
+      color: #312e81;
     }
 
-    .btn-outline {
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.4);
-    }
-
-    .btn-outline:hover {
-      background: rgba(255, 255, 255, 0.25);
-    }
-
-    /* Tabel Nilai */
-    .table-wrapper {
-      padding: 0 24px 24px;
-      overflow-x: auto;
+    .formula-text {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1e1b4b;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 16px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
     th, td {
       border: 1px solid var(--border);
-      padding: 10px 12px;
+      padding: 8px 10px;
       text-align: center;
     }
 
     th {
-      background: #f8fafc;
-      color: #334155;
-      font-weight: 700;
-    }
-
-    td.name-col {
-      text-align: left;
-      font-weight: 500;
-    }
-
-    tr:hover {
-      background-color: #f8fafc;
-    }
-
-    .badge {
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 0.85rem;
-    }
-
-    .grade-A { background: #dcfce7; color: #166534; }
-    .grade-B { background: #dbeafe; color: #1e40af; }
-    .grade-C { background: #fef9c3; color: #854d0e; }
-    .grade-D { background: #fee2e2; color: #991b1b; }
-
-    .summary-bar {
-      margin-top: 16px;
-      padding: 12px 16px;
       background: #f1f5f9;
-      border-radius: 8px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.9rem;
-      gap: 10px;
     }
 
-    .empty-state {
-      text-align: center;
-      padding: 32px;
-      color: #64748b;
+    /* Bagian Konsep Materi */
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .concept-item {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .concept-item h3 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+
+    /* Bagian Latihan Soal */
+    .quiz-box {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 12px 16px;
+      margin: 8px 0;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: white;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .quiz-opt:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: #eef2ff;
+    }
+
+    .quiz-opt.correct {
+      background: #dcfce7;
+      border-color: #16a34a;
+      font-weight: bold;
+    }
+
+    .quiz-opt.wrong {
+      background: #fee2e2;
+      border-color: #dc2626;
     }
   </style>
 </head>
 <body>
 
-  <div class="app-container">
-    <!-- Header -->
-    <div class="header">
-      <div>
-        <h1>Daftar Nilai Siswa Online</h1>
-        <p>Data tersimpan otomatis di perangkat Anda &bull; Mendukung penambahan kelas tanpa batas</p>
-      </div>
-      <div class="header-actions">
-        <button class="btn btn-success" onclick="exportToCSV()">📥 Unduh Excel (CSV)</button>
-        <button class="btn btn-outline" onclick="resetDefaultData()">↺ Reset Data Awal</button>
+  <div class="wrapper">
+    <header>
+      <h1>Eksplorasi Rotasi (Perputaran) — Matematika SMP</h1>
+      <p>Pahami konsep perputaran bangun datar melalui simulasi animasi interaktif, rumus cepat, dan kuis latihan.</p>
+    </header>
+
+    <!-- Menu Navigasi -->
+    <div class="nav-tabs">
+      <button class="nav-btn active" onclick="switchTab('simulasi', this)">1. Simulasi Animasi Rotasi</button>
+      <button class="nav-btn" onclick="switchTab('materi', this)">2. Ringkasan Rumus & Konsep</button>
+      <button class="nav-btn" onclick="switchTab('kuis', this)">3. Latihan Soal Cepat</button>
+    </div>
+
+    <!-- TAB 1: SIMULASI INTERAKTIF -->
+    <div id="simulasi" class="section active">
+      <div class="sim-grid">
+        <!-- Kanvas -->
+        <div class="card canvas-box">
+          <canvas id="rotCanvas" width="520" height="520"></canvas>
+          <div class="legend">
+            <span><i class="dot" style="background:#2563eb;"></i> Bangun Awal (ABC)</span>
+            <span><i class="dot" style="background:#f43f5e;"></i> Bayangan (A'B'C')</span>
+            <span><i class="dot" style="background:#f59e0b;"></i> Pusat Putar O(0,0)</span>
+            <span><i class="dot" style="background:#10b981;"></i> Lintasan Busur Putar</span>
+          </div>
+        </div>
+
+        <!-- Panel Kontrol -->
+        <div class="card">
+          <div class="control-group">
+            <label>Pilih Bentuk Bangun Awal:</label>
+            <select id="shapeSelect" onchange="changeShape()">
+              <option value="triangle">Segitiga ABC (A(2,1), B(6,1), C(3,4))</option>
+              <option value="flag">Bendera Segitiga (A(1,2), B(5,2), C(1,5))</option>
+              <option value="trapezoid">Trapesium Siku-siku (A(2,1), B(6,1), C(4,4), D(2,4))</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label>Pilih Sudut & Arah Rotasi (Pusat O(0,0)):</label>
+            <div class="angle-pills">
+              <button class="pill-btn active" onclick="selectAngle(90, this)">+90° (Berlawanan Jarum Jam)</button>
+              <button class="pill-btn" onclick="selectAngle(-90, this)">-90° (Searah Jarum Jam)</button>
+              <button class="pill-btn" onclick="selectAngle(180, this)">180° (Setengah Putaran)</button>
+              <button class="pill-btn" onclick="selectAngle(270, this)">+270° (Berlawanan Jarum Jam)</button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label>Atau Geser Sudut Manual: <span id="manualAngleLabel" style="color:#4f46e5;">90°</span></label>
+            <input type="range" id="angleSlider" min="-360" max="360" step="15" value="90" oninput="manualRotate(this.value)">
+          </div>
+
+          <div class="action-btns">
+            <button class="btn-play" onclick="playAnimation()">▶ Putar Animasi</button>
+            <button class="btn-reset" onclick="resetSim()">↺ Reset</button>
+          </div>
+
+          <div class="formula-card">
+            <h3 id="formulaTitle">Rotasi +90° Pusat O(0,0)</h3>
+            <div class="formula-text" id="formulaRule">P(x, y) &rarr; P'(-y, x)</div>
+            <small id="formulaNote" style="color:#475569; display:block; margin-top:4px;">
+              Arah positif (+) berarti berputar berlawanan arah jarum jam.
+            </small>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Titik</th>
+                <th>Koordinat Awal</th>
+                <th>Koordinat Bayangan</th>
+              </tr>
+            </thead>
+            <tbody id="coordTable"></tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <!-- Tab Daftar Kelas -->
-    <div class="tabs-bar" id="tabsBar">
-      <!-- Tab kelas akan dimuat otomatis oleh JavaScript -->
-    </div>
-
-    <!-- Toolbar Tambah Siswa & Hapus Kelas -->
-    <div class="toolbar">
-      <div class="add-student-form">
-        <input type="text" id="newStudentName" placeholder="Ketik nama siswa baru..." onkeypress="handleEnter(event)" />
-        <button class="btn btn-primary" onclick="addStudent()">+ Tambah Siswa</button>
-      </div>
-      <div>
-        <button class="btn btn-danger" onclick="deleteCurrentClass()" id="deleteClassBtn">🗑 Hapus Kelas Ini</button>
-      </div>
-    </div>
-
-    <!-- Area Tabel Nilai -->
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 50px;">No</th>
-            <th style="text-align: left;">Nama Siswa</th>
-            <th style="width: 100px;">Tugas</th>
-            <th style="width: 100px;">UH / Kuis</th>
-            <th style="width: 100px;">UTS</th>
-            <th style="width: 100px;">UAS</th>
-            <th style="width: 110px;">Rata-rata</th>
-            <th style="width: 100px;">Predikat</th>
-            <th style="width: 80px;">Aksi</th>
-          </tr>
-        </thead>
-        <tbody id="studentTableBody">
-          <!-- Baris siswa dimuat otomatis -->
-        </tbody>
-      </table>
-
-      <div class="summary-bar" id="summaryBar">
-        <!-- Ringkasan kelas -->
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const STORAGE_KEY = 'daftar_nilai_online_v1';
-
-    // Data awal 4 kelas
-    const defaultData = {
-      activeClassId: 'kls-1',
-      classes: [
-        {
-          id: 'kls-1',
-          name: 'Kelas VII-A',
-          students: [
-            { id: 1, name: 'Ahmad Fauzan', tugas: 85, uh: 88, uts: 82, uas: 90 },
-            { id: 2, name: 'Bunga Citra', tugas: 92, uh: 90, uts: 88, uas: 94 },
-            { id: 3, name: 'Daffa Pratama', tugas: 75, uh: 70, uts: 78, uas: 80 }
-          ]
-        },
-        {
-          id: 'kls-2',
-          name: 'Kelas VII-B',
-          students: [
-            { id: 1, name: 'Citra Kirana', tugas: 88, uh: 85, uts: 84, uas: 89 },
-            { id: 2, name: 'Dimas Anggara', tugas: 68, uh: 72, uts: 65, uas: 70 }
-          ]
-        },
-        {
-          id: 'kls-3',
-          name: 'Kelas VIII-A',
-          students: [
-            { id: 1, name: 'Eka Putri', tugas: 95, uh: 92, uts: 90, uas: 96 },
-            { id: 2, name: 'Farhan Kamil', tugas: 80, uh: 78, uts: 82, uas: 85 }
-          ]
-        },
-        {
-          id: 'kls-4',
-          name: 'Kelas VIII-B',
-          students: [
-            { id: 1, name: 'Gita Gutawa', tugas: 84, uh: 86, uts: 80, uas: 88 },
-            { id: 2, name: 'Hendra Setiawan', tugas: 76, uh: 74, uts: 79, uas: 81 }
-          ]
-        }
-      ]
-    };
-
-    let appData = loadData();
-
-    function loadData() {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch (e) {
-          return JSON.parse(JSON.stringify(defaultData));
-        }
-      }
-      return JSON.parse(JSON.stringify(defaultData));
-    }
-
-    function saveData() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
-    }
-
-    function getActiveClass() {
-      return appData.classes.find(c => c.id === appData.activeClassId) || appData.classes[0];
-    }
-
-    // Render Tab Kelas
-    function renderTabs() {
-      const tabsBar = document.getElementById('tabsBar');
-      tabsBar.innerHTML = '';
-
-      appData.classes.forEach(cls => {
-        const btn = document.createElement('button');
-        btn.className = `tab-btn ${cls.id === appData.activeClassId ? 'active' : ''}`;
-        btn.innerHTML = `<span>${cls.name}</span> <small style="opacity:0.7;">(${cls.students.length})</small>`;
-        btn.onclick = () => {
-          appData.activeClassId = cls.id;
-          saveData();
+    <!-- TAB 2: RINGKASAN KONSEP -->
+    <div id="materi" class="section">
+      <div class="card">
+        <h2 style="margin-top:0;">Apa Itu Rotasi (Perputaran)?</h2>
+        <p>
